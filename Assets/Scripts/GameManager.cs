@@ -7,8 +7,11 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public int bestScore;
-    public static TextMeshProUGUI playerName;
+    public static int bestScore;
+    [SerializeField] private TMP_InputField playerNameText;
+    [SerializeField] TextMeshProUGUI bestScoreText;
+    public static string playerName;
+    public static string bestPlayerName;
 
     private void Awake()
     {
@@ -24,16 +27,32 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         LoadBestScore();
     }
+    
+    public void SetPlayerName()
+    {
+        playerName = playerNameText.text;
+
+    }
+    
+    public void NewBestScore(int score)
+    {
+        bestScore = score;
+        
+        SaveBestScore();
+    }
+
     [System.Serializable]
     class SaveData
     {
         public int bestScore;
+        public string playerName;
     }
 
     public void SaveBestScore()
     {
         SaveData data = new SaveData();
         data.bestScore = bestScore;
+        data.playerName = playerName;
 
         string json = JsonUtility.ToJson(data);
 
@@ -49,6 +68,8 @@ public class GameManager : MonoBehaviour
             SaveData data = JsonUtility.FromJson<SaveData>(json);
 
             bestScore = data.bestScore;
+            bestPlayerName = data.playerName;
+            bestScoreText.text = ("Best Score : " + bestPlayerName + " : " + bestScore);
         }
     }
 }

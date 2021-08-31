@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     public void NewBestScore(int score)
     {
         bestScore = score;
+        bestPlayerName = playerName;
         
         SaveBestScore();
     }
@@ -52,7 +53,7 @@ public class GameManager : MonoBehaviour
     {
         SaveData data = new SaveData();
         data.bestScore = bestScore;
-        data.playerName = playerName;
+        data.playerName = bestPlayerName;
 
         string json = JsonUtility.ToJson(data);
 

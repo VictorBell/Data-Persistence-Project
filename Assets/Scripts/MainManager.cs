@@ -80,6 +80,7 @@ public class MainManager : MonoBehaviour
         if (m_Points > GameManager.bestScore)
         {
             GameManager.Instance.NewBestScore(m_Points);
+            BestScoreText.text = ("Best Score : " + GameManager.bestPlayerName + " : " + GameManager.bestScore);
         }
     }
 }
